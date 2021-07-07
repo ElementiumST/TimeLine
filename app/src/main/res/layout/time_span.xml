@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_span_background"
+            android:padding="2dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10:32:12"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="87dp"
+                tools:layout_editor_absoluteY="21dp" />
+        </FrameLayout>
+
+        <View
+            android:id="@+id/topRound"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:background="@drawable/time_span_background"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+            app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+            app:layout_constraintStart_toStartOf="@+id/frameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+        <View
+            android:id="@+id/centerLine"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:background="@drawable/time_span_background"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomRound"
+            app:layout_constraintEnd_toEndOf="@+id/bottomRound"
+            app:layout_constraintStart_toStartOf="@+id/bottomRound"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <View
+            android:id="@+id/bottomRound"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="@color/accent"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/topRound"
+            app:layout_constraintStart_toStartOf="@+id/topRound"
+            app:layout_constraintTop_toBottomOf="@+id/topRound" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
