@@ -10,6 +10,6 @@ class TimeLineMinutesAdapter(
 ): TimeLineAdapter(archive) {
 
     override fun getMillisecondsInOnePixel(): Int {
-        return 8.toPx.toInt()
+        return 20.toPx.toInt()
     }
 }

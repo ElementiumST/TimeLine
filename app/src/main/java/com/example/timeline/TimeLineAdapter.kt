@@ -2,6 +2,7 @@ package com.example.timeline
 
 import android.content.Context
 import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,14 @@ abstract class TimeLineAdapter(
         const val VIEW_TYPE_LIVE = 2
         const val VIEW_TYPE_START_FREE_SPACE = 3
         const val VIEW_TYPE_END_FREE_SPACE = 4
+        const val DIVIDER_MIN_TIME_IN_MILLISECOND = 10000
 
         const val ONE_PREVIEW_WIDTH = 200
+    }
+    lateinit var holderTypeList: List<Int>
+
+    init {
+        updateViewHolderList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -54,30 +61,28 @@ abstract class TimeLineAdapter(
     }
 
     override fun getItemCount(): Int {
-        return getSegmentsCount()*2+2
+        return holderTypeList.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            position == 0 -> {
-                VIEW_TYPE_START_FREE_SPACE
-            }
-            position == itemCount-1 -> {
-                VIEW_TYPE_END_FREE_SPACE
-            }
-            position == itemCount-2 -> {
-                VIEW_TYPE_LIVE
-            }
-            position % 2 == 0 -> {
-                VIEW_TYPE_DIVIDER
-            }
-            else -> {
-                VIEW_TYPE_SEGMENT
-            }
-        }
+        return holderTypeList[position]
     }
 
     abstract fun getMillisecondsInOnePixel(): Int;
+
+    private fun updateViewHolderList() {
+        val holderList = mutableListOf<Int>()
+        holderList.add(VIEW_TYPE_START_FREE_SPACE)
+        for (segmentIndex in archive.segments.indices) {
+            if(segmentIndex > 0 && archive.segments[segmentIndex].timeStart - archive.segments[segmentIndex-1].timeEnd > DIVIDER_MIN_TIME_IN_MILLISECOND) {
+                holderList.add(VIEW_TYPE_DIVIDER)
+            }
+            holderList.add(VIEW_TYPE_SEGMENT)
+        }
+        holderList.add(VIEW_TYPE_LIVE)
+        holderList.add(VIEW_TYPE_END_FREE_SPACE)
+        holderTypeList = holderList
+    }
 
     private fun onCreateViewSegment(layoutInflater: LayoutInflater, parent: ViewGroup): TimeLineSegmentViewHolder {
         val binding = ItemSegmentBinding.inflate(layoutInflater)
